@@ -5,15 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sender</title>
 
-    <script src="/script/sender.js" defer></script>
+    <link rel="stylesheet" href="/src/style.css">
+    <script src="/src/sender.js" defer></script>
     <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
     <button id="connect">connect</button>
     <br>
-    <input type="file" id="fileInput" />
-    <button id="sendFile">send file</button>
+    <div id="wrapper">
+        <input type="file" id="fileInput" />
+        <br>
+        <button id="sendFile">send file</button>
+    </div>
     <br>
     <span id="status"></span>
+    <progress value="0" max="100"></progress>
 </body>
 </html>

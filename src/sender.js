@@ -3,10 +3,11 @@ const socket = io();
 const peerConnection = new RTCPeerConnection();
 const dataChannel = peerConnection.createDataChannel("channel");
 
-const connect = document.querySelector("#connect");
+const connect = document.getElementById("connect");
 const fileInput = document.querySelector("#fileInput");
 const sendFile = document.querySelector("#sendFile");
 const status = document.querySelector("#status");
+const progress = document.querySelector("progress");
 
 let file;
 const chunkSize = 256 * 1024; // 256 KB MAX
@@ -35,8 +36,11 @@ connect.addEventListener("click", () => {
 
   peerConnection.addEventListener("connectionstatechange", (event) => {
     if (peerConnection.connectionState === "connected") {
-      connect.innerText = "connected";
+      connect.innerText = "connected ✔️";
+      connect.style.backgroundColor = "rgb(43, 163, 83)";
       connect.disabled = true;
+
+      document.querySelector("#wrapper").style.display = "flex";
     }
   });
 });
@@ -59,6 +63,7 @@ sendFile.addEventListener("click", () => {
     );
 
     status.innerText = file.size;
+    progress.style.display = "block";
     readNextChunk();
   } else {
     console.error("No file selected.");
@@ -68,10 +73,11 @@ sendFile.addEventListener("click", () => {
 // waiting for acknowledgment
 dataChannel.onmessage = function () {
   status.innerText = "sending : " + (offset / file.size * 100).toFixed(0) + " %";
+  progress.value = (offset / file.size * 100).toFixed(0);
   if (offset < file.size) {
     readNextChunk();
   } else {
-    // status.innerText = "File transfer complete";
+    status.innerText = "File transfer complete";
     offset = 0;
   }
 };

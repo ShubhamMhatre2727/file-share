@@ -5,6 +5,7 @@ let dataChannel;
 const connect = document.querySelector("#connect");
 const status1 = document.querySelector("#status1");
 const status2 = document.querySelector("#status2");
+const progress = document.querySelector("progress");
 
 socket.on("offer", async (offer) => {
     peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
@@ -43,6 +44,7 @@ peerConnection.addEventListener("datachannel", (event) => {
   });
   dataChannel.addEventListener("close", () => {
     console.log("data channl closed");
+    document.location.reload();
   });
 
   dataChannel.addEventListener("message", (event) => {
@@ -53,6 +55,7 @@ peerConnection.addEventListener("datachannel", (event) => {
       metaData = JSON.parse(data);
 
       status1.innerText = "file size : " + (metaData.size / (1024 * 1024)).toFixed(4) + " MB";
+      progress.style.display = "block";
     } else {
       // handling data chuncks
       receiveDataChunk(data);
@@ -64,6 +67,7 @@ function receiveDataChunk(chunk) {
   receivedChunks.push(chunk);
   receivedSize += chunk.byteLength;
   status2.innerText = "Recieving : " + (receivedSize / metaData.size * 100).toFixed(0) + " %";
+  progress.value = (receivedSize / metaData.size * 100).toFixed(0);
 
   if (receivedSize === metaData.size) {
     // All chunks received, reconstruct the file
