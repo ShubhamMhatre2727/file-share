@@ -3,6 +3,7 @@
     margin: 0;
     box-sizing: border-box;
     text-decoration: none;
+    color: #fff;
 }
 
 body{
@@ -14,23 +15,24 @@ body{
     justify-content: center;
     align-items: center;
     
-    background-color: aquamarine;
+    background-color: #00001f;
+    ;
 }
 
 h1{
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-style: italic;
     letter-spacing: 5px;
-    border-block: 7px double rgb(124, 7, 7);
+    border-block: 7px double rgb(7 124 77);
 }
 
 a{
     color: black;
     border: 1px solid black;
     border-radius: 7px;
-    box-shadow: 2px 3px 7px black;
+    box-shadow: 2px 3px 7px #105759;
 
-    width: 25vw;
+    width: 180px;
     padding: 2vh 0;
     text-align: center;
     font-family: monospace;
@@ -38,7 +40,7 @@ a{
     font-style: italic;
     margin: 10px 0;
 
-    background-color: rgb(43, 163, 83);
+    background-color: rgb(20 137 97);
 }
 
 a:active, button:active{
@@ -46,7 +48,7 @@ a:active, button:active{
 }
 
 button {
-    width: 15vw;
+    width: 120px;
     padding-block: 10px;
     margin: 3vh;
     border-radius: 15px;
@@ -71,7 +73,7 @@ button {
 }
 
 progress {
-    display: none;
+    opacity: 0;
 }
 
 #border{
@@ -79,19 +81,22 @@ progress {
   flex-direction: column;
   justify-content: center;
   text-align: center;
-  width: 60vw;
+  line-height: 35px;
+  padding: 5px;
+  border-style: dashed;
+  border-color: rgb(7 124 77);
+  border-width: 4px 0 0 0;
+  width: 300px;
   aspect-ratio: 3/3;
   border-radius: 50%;
-  animation-name: scanning;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
+  animation: scanning 2s linear infinite reverse;
+}
+
+#border div{
+    animation: scanning 2s linear infinite;
 }
 
 @keyframes scanning {
-  0% {border-top: 1px solid}
-  25% {border-right: 1px solid}
-  50% {border-bottom: 1px solid}
-  75% {border-left: 1px solid}
-  100% {border: none;}
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
 }

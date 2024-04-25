@@ -25,6 +25,9 @@ socket.on("icecandidate", async (candidate) => {
 peerConnection.addEventListener("connectionstatechange", (event) => {
     if (peerConnection.connectionState === "connected") {
         status1.innerText = "connected";
+        document.getElementById("border").style.animation = "none";
+        document.querySelector("#border div").style.animation = "none";
+
     }
 });
 
@@ -55,7 +58,7 @@ peerConnection.addEventListener("datachannel", (event) => {
       metaData = JSON.parse(data);
 
       status1.innerText = "file size : " + (metaData.size / (1024 * 1024)).toFixed(4) + " MB";
-      progress.style.display = "block";
+      progress.style.opacity = 1;
     } else {
       // handling data chuncks
       receiveDataChunk(data);

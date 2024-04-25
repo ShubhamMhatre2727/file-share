@@ -7,6 +7,7 @@ const connect = document.getElementById("connect");
 const fileInput = document.querySelector("#fileInput");
 const sendFile = document.querySelector("#sendFile");
 const status = document.querySelector("#status");
+const wrapper = document.querySelector("#wrapper");
 const progress = document.querySelector("progress");
 
 let file;
@@ -62,8 +63,9 @@ sendFile.addEventListener("click", () => {
       }),
     );
 
+    wrapper.style.display = "none";
     status.innerText = file.size;
-    progress.style.display = "block";
+    progress.style.opacity = 1;
     readNextChunk();
   } else {
     console.error("No file selected.");
@@ -77,6 +79,7 @@ dataChannel.onmessage = function () {
   if (offset < file.size) {
     readNextChunk();
   } else {
+    wrapper.style.display = "flex";
     status.innerText = "File transfer complete";
     offset = 0;
   }
