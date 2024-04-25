@@ -73,3 +73,25 @@ button {
 progress {
     display: none;
 }
+
+#border{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  width: 60vw;
+  aspect-ratio: 3/3;
+  border-radius: 50%;
+  animation-name: scanning;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes scanning {
+  0% {border-top: 1px solid}
+  25% {border-right: 1px solid}
+  50% {border-bottom: 1px solid}
+  75% {border-left: 1px solid}
+  100% {border: none;}
+}
