@@ -78,8 +78,11 @@ function receiveDataChunk(chunk) {
     fileChunks.push(blob);
     const reconstructedFile = new Blob(fileChunks, { type: metaData.type });
     // Now you have the reconstructed file, you can save it or process it further
+    status1.innerText = "Reconstructing file";
     saveReconstructedFile(reconstructedFile);
-    status2.innerText = "done !, " + (receivedSize / metaData.size * 100).toFixed(0) + " %";
+    status2.innerText = (receivedSize / metaData.size * 100).toFixed(0) + " %";
+    status1.innerText = "completed";
+    progress.style.opacity = 0;
     console.log("File reconstruction complete.");
     receivedSize = 0;
   }
