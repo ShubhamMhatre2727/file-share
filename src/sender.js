@@ -13,9 +13,7 @@ const progress = document.querySelector("progress");
 let file;
 const chunkSize = 256 * 1024; // 256 KB MAX
 let offset = 0;
-
-
-
+let startTime = 0;
 
 connect.addEventListener("click", () => {
   peerConnection.createOffer().then(async (offer) => {
@@ -49,11 +47,13 @@ connect.addEventListener("click", () => {
 // getting file data
 fileInput.addEventListener("change", () => {
   file = fileInput.files[0];
-  status.innerText = "file size : " + (file.size / (1024 * 1024)).toFixed(4) + " MB";
+  status.innerText =
+    "file size : " + (file.size / (1024 * 1024)).toFixed(4) + " MB";
 });
 
 sendFile.addEventListener("click", () => {
   if (file) {
+    startTime = Date.now();
     // sending metadata first
     dataChannel.send(
       JSON.stringify({
@@ -74,13 +74,16 @@ sendFile.addEventListener("click", () => {
 
 // waiting for acknowledgment
 dataChannel.onmessage = function () {
-  status.innerText = "sending : " + (offset / file.size * 100).toFixed(0) + " %";
-  progress.value = (offset / file.size * 100).toFixed(0);
+  status.innerText =
+    "sending : " + ((offset / file.size) * 100).toFixed(2) + " %";
+  progress.value = ((offset / file.size) * 100).toFixed(0);
   if (offset < file.size) {
     readNextChunk();
   } else {
     wrapper.style.display = "flex";
     status.innerText = "File transfer complete";
+    console.log(Math.abs(startTime - Date.now()) + " ms");
+    startTime = 0;
     offset = 0;
   }
 };
